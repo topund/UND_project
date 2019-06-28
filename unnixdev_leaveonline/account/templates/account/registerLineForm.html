@@ -1,0 +1,39 @@
+{% extends 'base/base_page_regis.html' %}    
+{% block content %}
+{% load static %}
+    <div style="text-align:center;">
+        <h1>สมัครสมาชิก</h1>
+        <div class="contentRegis" >
+            <form class="register_form" style="text-align:center;">
+                <table style="width: 25%; margin: 20px auto;">
+                <tr>
+                    <td><label for="regis_username">ชื่อผู้ใช้งาน : </label></td>
+                    <td><input name="regis_username" id="regis_username" type="text" required> </td>
+        
+                </tr>
+                <tr>
+                    <td><label for="regis_password">รหัสผ่าน : </label></td>
+                    <td><input name="regis_password" id="regis_password" type="password" required> </td>
+                    
+                    
+                </tr>
+                <tr>
+                    <td><label for="regis_againpassword">ย้ำรหัสผ่าน : </label></td>
+                    <td><input name="regis_againpassword" id="regis_againpassword" type="password" required> </td>
+                    
+                    
+                </tr>
+                <tr>
+                    <td><label for="regis_email">อีเมล : </label></td>
+                    <td><input name="regis_email" id="regis_email" type="email" required> </td>
+                    
+                    
+                </tr>
+                </table>
+
+                <input id="but_submit" type="submit" value="Register"> 
+            </form>
+        </div>
+    </div>
+    <script src={% static 'account/js/registerLine.js' %}></script>
+{% endblock %}
