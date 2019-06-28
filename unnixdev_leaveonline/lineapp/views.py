@@ -66,7 +66,7 @@ def callbackLine(request):
             else:
                 print(user_line_id)
                 encr = encrypt_decrypt(user_line_id,"encrypt")
-                link = f"{settings.WEB_NAME}account/signupLinePage/?token={encr}"
+                link = f"{settings.WEB_NAME}account/registerLine/?token={encr}"
                 reply_message(reply_token, link)
             return JsonResponse({"success" : "register success"})
 

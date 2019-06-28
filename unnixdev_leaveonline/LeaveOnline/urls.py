@@ -22,6 +22,7 @@ urlpatterns = [
     path('user/', include('frontend.urls')), # new
     path('api/', include('apileaveonline.urls')), # new
     path('line/', include('lineapp.urls')), # new
+    path('account/', include('users.urls')), # new
     
     # path('account/', include('account.urls')), # new
 

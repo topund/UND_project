@@ -110,7 +110,7 @@ AUTH_PASSWORD_VALIDATORS = [
 
 LANGUAGE_CODE = 'en-us'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Bangkok'
 
 USE_I18N = True
 
@@ -128,6 +128,7 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/account/login/'
 
 OIDC_USERINFO = 'unixDevsso.oidc_provider_settings.userinfo'
+OIDC_EXTRA_SCOPE_CLAIMS = 'yourproject.oidc_provider_settings.CustomScopeClaims'
 
 
 # SESSION_COOKIE_DOMAIN = "127.0.0.1:5200"

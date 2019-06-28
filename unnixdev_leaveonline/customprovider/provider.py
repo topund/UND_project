@@ -25,7 +25,7 @@ class CustomProvider(OAuth2Provider):
                     # last_name=data['family_name'],)
 
     def get_default_scope(self):
-        scope = ['openid', 'profile', 'email']
+        scope = ['openid', 'profile', 'email', 'profile_exten']
         return scope
 
 providers.registry.register(CustomProvider)
