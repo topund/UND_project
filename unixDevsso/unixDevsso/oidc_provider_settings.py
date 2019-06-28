@@ -10,13 +10,17 @@ class CustomScopeClaims(ScopeClaims):
     def scope_profile_exten(self):
         import pdb; pdb.set_trace()
         dic = {
-            'bar': 'Something dynamic here',
+            'department': self.userinfo.get('department'),
+            'position': self.userinfo.get('position'),
+            'sex': self.userinfo.get('sex'),
+            'address': self.userinfo.get('address'),
+            'phone': self.userinfo.get('phone'),
         }
 
         return dic
 
     # If you want to change the description of the profile scope, you can redefine it.
-    info_profile = (
+    info_profile_exten = (
         _(u'Profile'),
         _(u'Another description.'),
     )
@@ -25,9 +29,17 @@ def userinfo(claims, user):
     # Populate claims dict.
     # import pdb; pdb.set_trace()
     claims['nickname'] = user.username
-    claims['middle_name'] = user.first_name
+    claims['given_name'] = user.first_name
     claims['family_name'] = user.last_name
     claims['email'] = user.email
+
+    claims['department'] = str(user.dep_name)
+    claims['position'] = str(user.pos_name)
+    claims['sex'] = str(user.sex)
+    claims['address'] = str(user.address)
+    claims['phone'] = str(user.phone)
+
+
 
     return claims
     

@@ -15,13 +15,13 @@ def login(request):
         user_id = request.POST['id']
         user_pass = request.POST['password']
         print(user_id)
-        user = authenticate(request, username=user_id, password=user_pass)
-        print(user)
-        if(user == None):
-            try:
-                user_id = get_object_or_404(User, email=user_id).username
-            except:
-                return redirect(reverse('account:login'))
+        # user = authenticate(request, username=user_id, password=user_pass)
+        # print(user)
+        # if(user == None):
+        #     try:
+        #         user_id = get_object_or_404(User, email=user_id).username
+        #     except:
+        #         return redirect(reverse('account:login'))
         user = authenticate(request, username=user_id, password=user_pass)
 
         if user:
