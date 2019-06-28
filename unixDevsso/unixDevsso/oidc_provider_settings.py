@@ -8,7 +8,6 @@ class CustomScopeClaims(ScopeClaims):
     )
 
     def scope_profile_exten(self):
-        import pdb; pdb.set_trace()
         dic = {
             'department': self.userinfo.get('department'),
             'position': self.userinfo.get('position'),

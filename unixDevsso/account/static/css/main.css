@@ -69,6 +69,7 @@ td input::selection{
 }
 
 .submit__{
+    width: 20%;
     border: 1px solid #000;
     border-radius: 3px;
     padding: 7px 20px;
@@ -94,4 +95,49 @@ select:-webkit-autofill:focus {
   -webkit-text-fill-color: #00B16A;
   -webkit-box-shadow: 0 0 0px 1000px #fff inset;
   /* transition: background-color 5000s ease-in-out 0s; */
+}
+
+.allow_permission {
+    text-align: left;
+}
+
+.allow_permission ul{
+    text-align: left;
+    list-style-type: none;
+}
+
+.allow_permission ul li{
+    margin: 15px 0;
+    
+}
+
+.submit__author{
+    width: 20%;
+    border: 1px solid #000;
+    border-radius: 3px;
+    padding: 7px 20px;
+    margin-bottom: 15px;
+    background: #ccffb3;
+    transition: all 500ms;
+}
+
+.submit__author:hover{
+    background: #99ff66;
+    color: black;
+}
+
+
+.submit__dec{
+    width: 20%;
+    border: 1px solid black;
+    border-radius: 3px;
+    padding: 7px 20px;
+    margin-bottom: 15px;
+    background: #ffcccc;
+    transition: all 500ms;
+}
+
+.submit__dec:hover{
+    background: #ff8080;
+    color: black;
 }
