@@ -1,0 +1,25 @@
+{% comment %} {% extends 'base/base_page.html' %}    
+{% block content %} {% endcomment %}
+<div class="login_form">
+    <div style="width: 30%; padding: 30px; border: green solid 3px; border-radius: 15px; margin: 15px auto;">
+    <h2 style="margin: 0;">ประวัติส่วนตัว</h2>
+        <hr>
+        <table>
+            <tr>
+                <td>id : {{ context.id }}</td>
+            </tr>
+            <tr>
+                <td>username : {{ context.userename }}</td>
+            </tr>
+            <tr>
+                <td>name : {{ context.name }}</td>
+            </tr>
+            <tr>
+                <td>email : {{ context.email }}</td>
+            </tr>
+        </table>
+        <br>
+        <a href="{% url 'account:logout' %}">logout</a>
+    </div>
+</div>
+{% comment %} {% endblock %} {% endcomment %}
