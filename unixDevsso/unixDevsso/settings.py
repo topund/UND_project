@@ -128,7 +128,7 @@ AUTH_USER_MODEL = 'users.User'
 LOGIN_URL = '/account/login/'
 
 OIDC_USERINFO = 'unixDevsso.oidc_provider_settings.userinfo'
-OIDC_EXTRA_SCOPE_CLAIMS = 'yourproject.oidc_provider_settings.CustomScopeClaims'
+OIDC_EXTRA_SCOPE_CLAIMS = 'unixDevsso.oidc_provider_settings.CustomScopeClaims'
 
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),

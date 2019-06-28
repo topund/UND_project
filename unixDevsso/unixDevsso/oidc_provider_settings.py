@@ -23,6 +23,7 @@ class CustomScopeClaims(ScopeClaims):
 
 def userinfo(claims, user):
     # Populate claims dict.
+    import pdb; pdb.set_trace()
     claims['nickname'] = user.username
     claims['middle_name'] = user.first_name
     claims['family_name'] = user.last_name
