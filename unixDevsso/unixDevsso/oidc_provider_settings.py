@@ -2,13 +2,13 @@ from django.utils.translation import ugettext as _
 from oidc_provider.lib.claims import ScopeClaims
 
 class CustomScopeClaims(ScopeClaims):
-
     info_profile_exten = (
         _(u'Profile_Exten'),
         _(u'Exten profile detail'),
     )
 
     def scope_profile_exten(self):
+        import pdb; pdb.set_trace()
         dic = {
             'bar': 'Something dynamic here',
         }
@@ -23,7 +23,7 @@ class CustomScopeClaims(ScopeClaims):
 
 def userinfo(claims, user):
     # Populate claims dict.
-    import pdb; pdb.set_trace()
+    # import pdb; pdb.set_trace()
     claims['nickname'] = user.username
     claims['middle_name'] = user.first_name
     claims['family_name'] = user.last_name

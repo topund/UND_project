@@ -6,6 +6,9 @@ from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from users.models import User, Department, Position, Sextype, Statuswork
 
+from django.views import View
+
+
 @csrf_exempt
 def login(request):
     if(request.method == "POST"):
@@ -37,6 +40,13 @@ def login(request):
             return redirect(reverse('account:info', args=(request.user.id,)))
 
         return render(request, 'account/loginform.html')
+
+class RegisterView(View):
+    def dispatch(self, request, *args, **kwargs):
+        return super().dispatch(request, *args, **kwargs)
+    
+    def get(self, request):
+        return render(request, 'account/registerwithline.html')
 
 def logout(request):
     auth_logout(request)

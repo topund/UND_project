@@ -1,0 +1,44 @@
+{% extends 'base/base.html' %} {% block content %}
+    {% load static %}
+  <div class="login_form">
+    <div class="header" style="text-align: left">
+      <img src={% static 'img/unixdev-logo-web-h122.png' %} alt="">
+    </div>
+    <div class="body_">
+      <div style=" margin: 33px 0;">
+        <h2 style="font-size: 33px;">สมัครสมาชิก</h2>
+      </div>
+
+      <form class="register_form" style="text-align:center;">
+                <table style="width: 70%; margin: 20px auto;">
+                <tr>
+                    <td style="text-align: right;"><label for="regis_username">ชื่อผู้ใช้งาน : </label></td>
+                    <td style="text-align: left;"><input name="regis_username" id="regis_username" type="text" required> </td>
+        
+                </tr>
+                <tr>
+                    <td style="text-align: right;"><label for="regis_password">รหัสผ่าน : </label></td>
+                    <td style="text-align: left;"><input name="regis_password" id="regis_password" type="password" required> </td>
+                    
+                    
+                </tr>
+                <tr>
+                    <td style="text-align: right;"><label for="regis_againpassword">ย้ำรหัสผ่าน : </label></td>
+                    <td style="text-align: left;"><input name="regis_againpassword" id="regis_againpassword" type="password" required> </td>
+                    
+                    
+                </tr>
+                {% comment %} <tr>
+                    <td style="text-align: right;"><label for="regis_email">อีเมล : </label></td>
+                    <td style="text-align: left;"><input name="regis_email" id="regis_email" type="email" required> </td>
+                    
+                    
+                </tr> {% endcomment %}
+                </table>
+
+                <input class="submit__" type="submit" value="เข้าสู่ระบบ" />
+            </form>
+    </div>
+  </div>
+</div>
+{% endblock %}
