@@ -129,5 +129,6 @@ LOGIN_URL = '/account/login/'
 
 OIDC_USERINFO = 'unixDevsso.oidc_provider_settings.userinfo'
 
-
-# SESSION_COOKIE_DOMAIN = "127.0.0.1:5200"
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, "static"),
+]
