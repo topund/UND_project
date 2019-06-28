@@ -20,18 +20,20 @@ def sessionResult(request):
         "user" : None,
         "email" : None,
     }
-    if request.session.keys():
-        user_id = request.session['_auth_user_id']
-        user_obj = User.objects.get(pk=user_id)
-        json_auth["userpk"] = user_id
-        json_auth['user'] = user_obj.username
-        json_auth['email'] = user_obj.email
-        json_auth["status_login"] = True
+    try:
+        if request.session.keys():
+            user_id = request.session['_auth_user_id']
+            user_obj = User.objects.get(pk=user_id)
+            json_auth["userpk"] = user_id
+            json_auth['user'] = user_obj.username
+            json_auth['email'] = user_obj.email
+            json_auth["status_login"] = True
 
-        return json_auth
+            return json_auth
 
-
-    else: 
+        else: 
+            return json_auth
+    except:
         return json_auth
 
 def IndexPage(request):
