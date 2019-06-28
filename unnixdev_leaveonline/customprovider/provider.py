@@ -17,7 +17,6 @@ class CustomProvider(OAuth2Provider):
     def extract_common_fields(self, data):
         from pprint import pprint
         # import pdb; pdb.set_trace()
-        # import pdb; pdb.set_trace()
         return dict(username=data['nickname'],
                     neam=data['nickname'],
                     email=data['email'],)
