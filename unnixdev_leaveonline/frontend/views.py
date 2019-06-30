@@ -40,6 +40,7 @@ def sessionResult(request):
 
 def IndexPage(request):
     jsonSess = sessionResult(request)
+    print(jsonSess)
     if(jsonSess["status_login"] == False):
         return redirect('/account/login/')
     isSuper = False

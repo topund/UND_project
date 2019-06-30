@@ -61,9 +61,10 @@
           <div class="user_auth">
             {% if auth_.status_login %}
               <p>
-                ชื่อผู้ใช้งาน : <span pkid="{{auth_.userpk}}" id="username_">{{auth_.user}}</span>
-                แผนก : <span id="department_">{{depName}}</span>
-                ตำแหน่ง : <span id="position_">{{posName}}</span>
+                <!-- ชื่อผู้ใช้งาน : <span pkid="{{auth_.userpk}}" id="username_">{{auth_.user}}</span> -->
+                อีเมล : <span class="user_" pkid="{{auth_.userpk}}" id="username_">{{auth_.email}}</span>
+                แผนก : <span class="user_" id="department_">{{depName}}</span>
+                ตำแหน่ง : <span class="user_" id="position_">{{posName}}</span>
                 <a style="color: #FE8181;" href="{% url 'frontend:logout' %}">ออกจากระบบ</a>
               <p>
             {% else %}
