@@ -5,9 +5,11 @@ from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth.decorators import login_required
 from django.urls import reverse
 from users.models import User, Department, Position, Sextype, Statuswork
+from django.contrib.auth.hashers import make_password
 
 from django.views import View
-
+import json, gspread, datetime
+from oauth2client.service_account import ServiceAccountCredentials
 
 @csrf_exempt
 def login(request):
@@ -48,11 +50,73 @@ class RegisterView(View):
     def get(self, request):
         return render(request, 'account/registerwithline.html')
 
+    def post(set, request):
+        email_regis = request.POST["email"]
+        username = request.POST["username"]
+        password = request.POST["regis_password"]
+        if (User.objects.filter(email=email_regis) or User.objects.filter(username=username)):
+            text = "this email has already register"
+            return JsonResponse({"Register":text}, safe=False)
+        else:
+            try:
+                scope =  ["https://spreadsheets.google.com/feeds","https://www.googleapis.com/auth/spreadsheets","https://www.googleapis.com/auth/drive.file","https://www.googleapis.com/auth/drive"]
+                creds = ServiceAccountCredentials.from_json_keyfile_name("creds.json", scope)
+                client = gspread.authorize(creds)
+                sheet = client.open("employee_ref").sheet1
+                data = sheet.get_all_records()
+            except:
+                text = "error Cant connect google sheet"
+                return JsonResponse({"status":False, "message":text}, safe=False)
+            
+            member = 1
+            found = []
+            for row in data:
+                if (email_regis == row['email']):
+                    found.append(email_regis)
+                    row['username'] = username
+                    row['email'] = email_regis
+                    row['password'] = password
+                    insertUser(row)
+                    print("register already : {}".format(email_regis))
+
+                member+=1
+
+            if not found:
+                text = "not found email in UND data center"
+                return JsonResponse({"Register":text})
+
+            return redirect(reverse('account:login'))
+
 def logout(request):
     auth_logout(request)
     return redirect(reverse('account:login'))
 
+def insertUser(json_row):
+    dep_id = Department.objects.get(dep_name = json_row["แผนก"])
+    pos_id = Position.objects.get(pos_name = json_row["ตำแหน่ง"])
+    sex_id = Sextype.objects.get(sex_type = json_row["เพศ"])
+    status_worker_id = Statuswork.objects.get(status_work = json_row["สถานะปฏิบัติงาน"])
+                    
+    print(f"{dep_id} {pos_id} {sex_id} {status_worker_id}")
 
+    obj = User(
+            username=json_row["username"], 
+            password= make_password(json_row["password"]),
+            email=json_row["email"],
+            nickname=json_row["ชื่อเล่น"],
+            first_name=json_row["ชื่อ"],
+            last_name=json_row["นามสกุล"],
+            dep_name_id=dep_id.id,
+            pos_name_id=pos_id.id,
+            dateofbirth=datetime.datetime.strptime(json_row["วันเกิด"], "%m/%d/%Y").strftime("%Y-%m-%d"),
+            dateofstart=datetime.datetime.strptime(json_row["วันเริ่มทำงาน"], "%m/%d/%Y").strftime("%Y-%m-%d"),
+            phone=json_row["เบอร์โทร"],
+            address=json_row["ที่อยู่"],
+            sex_id=sex_id.id,
+            status_work_id=status_worker_id.id
+        )
+    obj.save()
+    
 @login_required
 def infomation(request,pk):
     if(request.user.id == pk):

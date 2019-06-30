@@ -386,7 +386,7 @@ def reportFn(request):
                     user_list.append(User.objects.get(pk = pro.user_id))
                 
             
-            elif (str(profilenow.pos_name) == "junior"):
+            elif (str(profilenow.pos_name) == "junior" or str(profilenow.pos_name) == "senior"):
                 print("Junior mode")
                 user_list = User.objects.filter(pk = jsonT["user_id"])
             

@@ -104,8 +104,11 @@ def registerLine(request):
             body["sex"] = sex[0].id
             status_work = Statuswork.objects.filter(status_work=body["status_work"])
             body["status_work"] = status_work[0].id
-            body["line"] = encrypt_decrypt(request.GET['token'], "decrypt")
-            
+            try:
+                body["line"] = encrypt_decrypt(request.GET['token'], "decrypt")
+            except:
+                return JsonResponse({"status":False, "message":"error Cant decript token"}, safe=False)
+
             profile_obj = Profile.objects.filter(user_id=request.user.id)
             if not profile_obj:
                 print("-----------------------------------------")
@@ -143,7 +146,7 @@ def insertProfile(body, user_id):
                     phone = body["phone"],
                 )
     proobj.save()
-    
+
     if "line" in body:
         proobj.line = body["line"]
         proobj.save()
