@@ -16,7 +16,7 @@
     {% if provider.name == "Unixdev" %}
             {% load static %}
         <li>
-            <a title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" 
+            <a style="width : 10%" title="{{provider.name}}" class="socialaccount_provider {{provider.id}}" 
             href="{% provider_login_url provider.id process=process scope=scope auth_params=auth_params %}">
             {{provider.name}}
             {% comment %} <img src="{% static "img/unixdev.PNG" %}" alt={{provider.name}} /> {% endcomment %}

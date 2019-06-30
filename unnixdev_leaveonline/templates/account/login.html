@@ -1,5 +1,4 @@
-
-{% extends 'base/base_page.html' %}  
+{% extends 'base/base_page.html' %}
 {% comment %} {% extends "account/base.html" %} {% endcomment %}
 {% load i18n %}
 {% load account socialaccount %}
@@ -8,29 +7,35 @@
 
 {% block content %}
 
-<div class="logintest" style="width: 50%">
-    <h1>เข้าสู้ระบบ</h1>
+<div class="">
+    <div class="col-sm-3"></div>
+    <div class="logintest col-sm-6" style="width: 50%; text-align: center">
+        <h1>เข้าสู้ระบบ</h1>
 
-    {% get_providers as socialaccount_providers %}
+        {% get_providers as socialaccount_providers %}
 
         <form class="login" method="POST" action="{% url 'account_login' %}">
             {% csrf_token %}
             {% comment %} {{ form.as_p }} {% endcomment %}
             {% if redirect_field_value %}
-                <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
+            <input type="hidden" name="{{ redirect_field_name }}" value="{{ redirect_field_value }}" />
             {% endif %}
-            {% comment %} <a class="button secondaryAction" href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a> {% endcomment %}
+            {% comment %} <a class="button secondaryAction"
+                href="{% url 'account_reset_password' %}">{% trans "Forgot Password?" %}</a> {% endcomment %}
             {% comment %} <button class="primaryAction" type="submit">เข้าสู้ระบบ</button> {% endcomment %}
         </form>
-        <div class="socialaccount_ballot">
+        <div class="socialaccount_ballot" style="margin-top: 40px">
 
-            <ul class="socialaccount_providers" >
-            {% include "socialaccount/snippets/provider_list.html" with process="login" %}
+            <ul class="socialaccount_providers">
+                {% include "socialaccount/snippets/provider_list.html" with process="login" %}
             </ul>
 
             {% comment %} <div class="login-or">{% trans 'or' %}</div> {% endcomment %}
 
         </div>
+    </div>
+    <div class="col-sm-3"></div>
+
 </div>
 
 {% endblock %}
