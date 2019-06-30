@@ -136,7 +136,8 @@ STATIC_URL = '/static/'
 APPEND_SLASH = False
 
 LOGIN_URL = '/account/login/'
-LOGIN_REDIRECT_URL = '/user/'
+# LOGIN_REDIRECT_URL = '/user/'
+LOGIN_REDIRECT_URL = '/account/bypass/'
 
 CSRF_COOKIE_SECURE = True
 

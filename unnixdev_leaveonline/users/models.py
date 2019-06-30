@@ -17,14 +17,14 @@ class Profile(models.Model):
     pos_name = models.ForeignKey(Position, on_delete=models.CASCADE)
     status_work = models.ForeignKey(Statuswork, on_delete=models.CASCADE)
     sex = models.ForeignKey(Sextype, on_delete=models.CASCADE)
-    line = models.CharField(default=None ,max_length=100)
+    line = models.CharField(null=True, blank=True ,max_length=100)
     firstname = models.CharField(default=None ,max_length=100)
     lastname = models.CharField(default=None ,max_length=100) 
     nickname = models.CharField(default=None ,max_length=50) 
-    dateofbirth = models.DateTimeField(default=None)
-    dateofstart = models.DateTimeField(default=None)
+    # dateofbirth = models.DateTimeField(default=None)
+    # dateofstart = models.DateTimeField(default=None)
     phone = models.CharField(default=None ,max_length=100)
-    address = models.CharField(default=None ,max_length=500)
+    # address = models.CharField(default=None ,max_length=500)
     
     class Meta:
         unique_together = (("user"),)

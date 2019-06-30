@@ -14,6 +14,7 @@ class CustomScopeClaims(ScopeClaims):
             'sex': self.userinfo.get('sex'),
             'address': self.userinfo.get('address'),
             'phone': self.userinfo.get('phone'),
+            'status_work': self.userinfo.get('status_work'),
         }
 
         return dic
@@ -37,8 +38,7 @@ def userinfo(claims, user):
     claims['sex'] = str(user.sex)
     claims['address'] = str(user.address)
     claims['phone'] = str(user.phone)
-
-
+    claims['status_work'] = str(user.status_work)
 
     return claims
     

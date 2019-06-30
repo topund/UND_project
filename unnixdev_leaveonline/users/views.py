@@ -13,6 +13,9 @@ import requests, datetime, pytz
 import json
 
 def encrypt_decrypt(id_line, mode):
+    """
+        เป็ตัว เข้าระหัส (encrypted) และถอดรหัส (decrypt) ของ ID line
+    """
     from cryptography.fernet import Fernet
     # key = Fernet.generate_key()  
     f = Fernet(settings.FERNET_KEY.encode())
@@ -26,8 +29,50 @@ def encrypt_decrypt(id_line, mode):
         return f.decrypt(id_line_en).decode()
 
 @login_required
-def registerLine(request):
+def bypass(request):
+    """
+        เป็นทางผ่านตอน lon in เช็กว่าคนที่ login Provider UND ผ่านแต่ไม่เคยสมัครเว็บนี้จะทำการสมัครโดยการ
+         - insert Profile
+         - insert Remain
+         - insert Superviser (ถ้ามี)
+    """
+    if(request.method == "GET"):
 
+        profile_obj = Profile.objects.filter(user_id=request.user.id)
+        if profile_obj:
+            print("this user have already insert profile")
+            return redirect(reverse('frontend:index')) 
+
+        account_social = SocialAccount.objects.get(user_id=request.user.id)
+        user_token = SocialToken.objects.get(account_id=account_social.id)
+        expires_token = user_token.expires_at
+        time_now = pytz.utc.localize(datetime.datetime.utcnow())
+        if(time_now > expires_token):
+            print("token timeout : {}".format(time_now - expires_token))
+            return JsonResponse({"error":"token timeout"}) 
+
+        body, status_code = getInfo(str(user_token))
+        if(status_code == 200):
+            dep = Department.objects.filter(dep_name=body["department"])
+            body["department"] = dep[0].id
+            pos = Position.objects.filter(pos_name=body["position"])
+            body["position"] = pos[0].id
+            body["position_name"] = str(pos[0]) 
+            sex = Sextype.objects.filter(sex_type=body["sex"])
+            body["sex"] = sex[0].id
+            status_work = Statuswork.objects.filter(status_work=body["status_work"])
+            body["status_work"] = status_work[0].id
+            
+            insertProfile(body, request.user.id)
+            insertToRemainpol(body, request.user.id)
+
+            return redirect(reverse('frontend:index')) 
+
+@login_required
+def registerLine(request):
+    '''
+        ทำการ สมัคร id ผ่าน line ถ้าเคยสมัครแล้ว จะ update id line แทน
+    '''    
     if(request.method == "GET"):
 
         account_social = SocialAccount.objects.get(user_id=request.user.id)
@@ -36,60 +81,73 @@ def registerLine(request):
         time_now = pytz.utc.localize(datetime.datetime.utcnow())
         
         '''
-            สามารถเอาไป ขอ refresh token ได้
+            เช็คว่า token หมดเวลาหรือยัง
+            (สามารถเอาไป ขอ refresh token ได้)
         '''
         if(time_now > expires_token):
             print("token timeout : {}".format(time_now - expires_token))
-            return JsonResponse({"error":"token timeout"})
+            return JsonResponse({"error":"token timeout"}) 
             
-        get_profile = requests.get("{}/openid/userinfo/?access_token={}".format(settings.UNIX_PROVIDER_URL,str(user_token)))
-        body = get_profile.json()
+
+        # get_profile = requests.get("{}/openid/userinfo/?access_token={}".format(settings.UNIX_PROVIDER_URL,))
+        # body = get_profile.json()
         # User.objects.filter(pk=request.user.id).update(first_name=body['given_name'], last_name=body['family_name'])
+        body, status_code = getInfo(str(user_token))
 
+        if(status_code == 200):
+            dep = Department.objects.filter(dep_name=body["department"])
+            body["department"] = dep[0].id
+            pos = Position.objects.filter(pos_name=body["position"])
+            body["position"] = pos[0].id
+            body["position_name"] = str(pos[0]) 
+            sex = Sextype.objects.filter(sex_type=body["sex"])
+            body["sex"] = sex[0].id
+            status_work = Statuswork.objects.filter(status_work=body["status_work"])
+            body["status_work"] = status_work[0].id
+            body["line"] = encrypt_decrypt(request.GET['token'], "decrypt")
+            
+            profile_obj = Profile.objects.filter(user_id=request.user.id)
+            if not profile_obj:
+                print("-----------------------------------------")
+                print("------------ don't register -------------")
+                print("-----------------------------------------")
+                insertProfile(body, request.user.id)
+                insertToRemainpol(body, request.user.id)
+            else:
+                # update id line
+                print("-----------------------------------------")
+                print("------------ update line ----------------")
+                print("-----------------------------------------")
+                profile_obj.update(line=body["line"])
+            
+            return redirect(reverse('frontend:index'))
 
-        dep = Department.objects.filter(dep_name=body["department"])
-        body["department"] = dep[0].id
-        pos = Position.objects.filter(pos_name=body["position"])
-        body["position"] = pos[0].id
-        body["position_name"] = str(pos[0]) 
-        sex = Sextype.objects.filter(sex_type=body["sex"])
-        body["sex"] = sex[0].id
-        body["line"] = encrypt_decrypt(request.GET['token'], "decrypt")
-        
-        profile_obj = Profile.objects.filter(user_id=request.user.id)
-        if not profile_obj:
-            print("-----------------------------------------")
-            print("------------ don't register -------------")
-            print("-----------------------------------------")
-            insertProfile(body, request.user.id)
-            insertToRemainpol(body, request.user.id)
-        else:
-            # update id line
-            print("-----------------------------------------")
-            print("------------ update line ----------------")
-            print("-----------------------------------------")
-            profile_obj.update(line=body["line"])
-        
-        return redirect(reverse('frontend:index'))
+def getInfo(token):
+    '''
+         GET ไปขอข้อมูลที่ UND Provider
+    '''
+    get_profile = requests.get("{}/openid/userinfo/?access_token={}".format(settings.UNIX_PROVIDER_URL,token))
+    body = get_profile.json()
+    return body, get_profile.status_code
 
 def insertProfile(body, user_id):
     proobj =  Profile(
                     user_id=user_id,
                     dep_name_id=body["department"],
                     pos_name_id=body["position"],
-                    status_work_id=1,
                     sex_id=body["sex"],
+                    status_work_id=body["status_work"],
                     firstname = body['given_name'],
                     lastname = body['family_name'],
                     nickname = body["nickname"],
-                    dateofbirth = datetime.datetime.now(),
-                    dateofstart = datetime.datetime.now(),
                     phone = body["phone"],
-                    address = "Address null",
-                    line = body["line"]
                 )
-        
     proobj.save()
+    
+    if "line" in body:
+        proobj.line = body["line"]
+        proobj.save()
+
     if("management" == body["position_name"]):
         supervisor = Suppervisor(
             dep_name_id = body["department"],

@@ -6,7 +6,7 @@ class SuppervisorAdmin(admin.ModelAdmin):
 admin.site.register(Suppervisor, SuppervisorAdmin)
 
 class ProfileAdmin(admin.ModelAdmin):
-    list_display = ['user', 'dep_name', 'pos_name', 'firstname', 'lastname', 'nickname', 'sex', 'dateofbirth', 'dateofstart', 'phone', 'address', 'status_work']
+    list_display = ['user', 'dep_name', 'pos_name', 'firstname', 'lastname', 'nickname', 'sex', 'phone', 'status_work']
 admin.site.register(Profile, ProfileAdmin)
 
 class RemainleavedaysAdmin(admin.ModelAdmin):
