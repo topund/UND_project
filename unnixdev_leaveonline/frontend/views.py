@@ -20,6 +20,7 @@ def sessionResult(request):
         "user" : None,
         "email" : None,
     }
+    
     try:
         if request.session.keys():
             user_id = request.session['_auth_user_id']
@@ -28,6 +29,7 @@ def sessionResult(request):
             json_auth['user'] = user_obj.username
             json_auth['email'] = user_obj.email
             json_auth["status_login"] = True
+            json_auth["full_name"] = '{} {}'.format(user_obj.first_name, user_obj.last_name)
 
             return json_auth
 
@@ -73,3 +75,5 @@ class LogOutView(View):
 # class MyLoginView(LoginView):
 #     # import pdb; pdb.set_trace()
 #     template_name = 'frontend_html/loginpage.html'
+
+"http://localhost:5200/openid/authorize/?client_id=538628&redirect_uri=http%3A%2F%2Flocalhost%3A3200%2Faccount%2Funixdev%2Flogin%2Fcallback%2F&scope=email+profile+profile_exten+openid&response_type=code&state=msJoQtazMplR"

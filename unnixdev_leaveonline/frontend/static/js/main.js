@@ -295,10 +295,12 @@ $(document).ready(function () {
                 // console.log(data)
                 var totalD = findDuplicate(data)
                 var temp = testSSS(data)
-                var strTable = `<table class="" border=1>
+                var strTable = `<table class="table" border=1>
+                    <thead class="thead-dark">
                     <tr>
                     <th>ประเภทการลา</th><th>แผนก</th><th>ตำแหน่ง</th><th>ระยะเวลา</th>
-                    </tr>`
+                    </tr>
+                    </thead>`
 
                 // for(i in data){
                 //     if()
@@ -482,7 +484,7 @@ function deletecontent(now) {
 function getCoverStaff(data) {
     if (data.length == 0) {
         var str = `
-        <h3>พนักงานในการควบคุม</h>
+        <h3>พนักงานในการควบคุม</h3>
         <div style="
         text-align: center;
         font-style: italic;
@@ -495,7 +497,7 @@ function getCoverStaff(data) {
     var str = `
     <div>
     <h3>พนักงานในการควบคุม</h3>
-    <table border="1">
+    <table class="table" border="1">
         <tr>
         `
     for (var i = 0; i < keys.length - 1; i ++){
@@ -556,7 +558,7 @@ function getSuperapprove(data) {
     }
     var str = `
     <h3>รอการอนุมัติ</h3>
-    <table border="1"><tr>
+    <table class="table" border="1"><tr>
     `
     for (d of data["keys"]) {
         str += `<th>${changeCharactor(d)}</th>`
@@ -662,7 +664,7 @@ function genreport_HR_SUP(data) {
     var str = `
         <h4 style="display: inline;">รายชื่อ</h4>
         <button val="hide" id="hide_table_report">ซ่อนตาราง</button>
-        <table style="margin-top: 10px" id="reportTable" border=1><tr>
+        <table class="table" style="margin-top: 10px" id="reportTable" border=1><tr>
     `
     for (k of data["keys"]) {
         str += `<th>${changeCharactor(k)}</th>`
@@ -778,7 +780,7 @@ function gen_page_detail(data) {
             <p>แผนก : ${firstCharUppercase(data["myself"]["dep_name"])}</p>
             <p>ตำแหน่ง : ${firstCharUppercase(data["myself"]["pos_name"])}</p>
         </div><h2>จำนวนวันลาที่เหลือ</h2>
-        <table border="1">
+        <table class="table" border="1">
     `
     var th = `<tr>`
     var td = `<tr>`
@@ -795,7 +797,7 @@ function gen_page_detail(data) {
         ">ไม่มีรายการ</div>`
         return divstr
     }
-    divstr += `<table style="margin-bottom: 20px"  border="1"><tr>`
+    divstr += `<table class="table" style="margin-bottom: 20px"  border="1"><tr>`
 
     for (k of data["hist"]["keys"]) {
         if(k == "username"){
@@ -833,7 +835,7 @@ function genreport_myself(data) {
         <p>Department : ${data["dep_name"]}</p>
         <p>Position : ${data["pos_name"]}</p>
         <h5>Remain Leaveday<h5>
-        <table border=1>
+        <table class="table" border=1>
     `
     var th = `<tr>`
     var td = `<tr>`

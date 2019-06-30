@@ -24,7 +24,7 @@ label{
 }
 .user_auth{
     position: absolute;
-    top: 15px;
+    top: 40px;
     right: 2%;
 }
 
@@ -116,6 +116,7 @@ li {
     display: none;
     cursor: pointer;
     position: fixed;
+    z-index: 1;
     background: rgba(0, 0, 0, 0.8);
     opacity: 0.8;
     width: 100%;

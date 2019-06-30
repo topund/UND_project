@@ -15,14 +15,14 @@ label{
 }
 
 .login_form{
-    width: 40%;
+    width: 30%;
     /* border: 1px solid black;
     border-radius: 20px; */
     margin: auto;
-    position: absolute;
-    top: 30%;
+    /* position: absolute;
+    top: 35%;
     left: 50%;
-    transform: translate( -50% , -50%)
+    transform: translate( -50% , -50%) */
 
 }
 
@@ -52,7 +52,7 @@ td {
     padding: 7px 3px;
 }
 
-td input{
+/* td input{
     border: 1px solid #888;
     border-radius: 3px;
     color: #00B16A;
@@ -66,7 +66,7 @@ td input:focus{
 
 td input::selection{
     border: 1px solid #20262A;
-}
+} */
 
 .submit__{
     width: 20%;
@@ -81,20 +81,6 @@ td input::selection{
 .submit__:hover{
     background: #777;
     color: white;
-}
-
-input:-webkit-autofill,
-input:-webkit-autofill:hover, 
-input:-webkit-autofill:focus,
-textarea:-webkit-autofill,
-textarea:-webkit-autofill:hover,
-textarea:-webkit-autofill:focus,
-select:-webkit-autofill,
-select:-webkit-autofill:hover,
-select:-webkit-autofill:focus {
-  -webkit-text-fill-color: #00B16A;
-  -webkit-box-shadow: 0 0 0px 1000px #fff inset;
-  /* transition: background-color 5000s ease-in-out 0s; */
 }
 
 .allow_permission {
@@ -140,4 +126,9 @@ select:-webkit-autofill:focus {
 .submit__dec:hover{
     background: #ff8080;
     color: black;
+}
+
+.login_form ul{
+    margin: 0;
+    padding: 0;
 }
